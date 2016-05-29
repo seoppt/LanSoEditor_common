@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#009900">
+    
+   
+    <TextView 
+        android:id="@+id/id_video_editor_demo_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:text="@string/video_editor_demo_hint"/>
+    
+    
+        <TextView  
+         android:id="@+id/id_video_edit_progress_hint"
+         android:layout_below="@id/id_video_editor_demo_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="0%"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"/>
+        
+        
+            <Button 
+        android:id="@+id/id_video_edit_btn"
+        android:layout_width="match_parent"
+        android:layout_margin="20dip"
+        android:layout_height="wrap_content"
+        android:text="开始测试"
+        android:layout_centerInParent="true"
+        android:background="#FFFF00"/>
+        
+            
+      <Button 
+        android:id="@+id/id_video_play_btn"
+        android:layout_below="@id/id_video_edit_btn"
+        android:layout_width="match_parent"
+        android:layout_margin="20dip"
+        android:layout_height="wrap_content"
+        android:text="结果预览"
+        android:background="#FFFF00"/>
+      
+ 
+    
+
+</RelativeLayout>
