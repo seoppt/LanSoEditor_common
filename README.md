@@ -1,4 +1,4 @@
-# LanSoEditor_common
+# LanSoEditor_common  ---android平台的视频编辑SDK
 
 ###当前版本是LanSoEditor-v1.2
 
