@@ -22,6 +22,21 @@
 
 ####我们有免费的,仅供个人视频爱好者使用的版本,欢迎您的使用
 *   下载地址 https://github.com/LanSoSdk/video_play_edit_sdk   
+*   
+####本SDK的编解码有:
+*  软解码器H264
+*  硬件加速解码器lansoh264_dec
+*  软编码器libx264
+*  硬编码器lansoh264_enc
+*  音频mp3编码器libmp3lame
+*  音频aac编码器 faac
+
+
+
+
+
+
+
 
 
 
