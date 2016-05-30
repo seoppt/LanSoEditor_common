@@ -12,8 +12,8 @@
 *  
 *  此SDK采用低价收费授权,公司性质的合作,为了您项目更好的进行,欢迎和我们联系.谢谢!
 
-###下载地址:
-		https://github.com/LanSoSdk/LanSoEditor_common
+###下载地址: 
+*  https://github.com/LanSoSdk/LanSoEditor_common
 ##联系方式:
 *   QQ 1852600324 
 *   Email:support@lansongtech.com
