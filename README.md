@@ -12,18 +12,15 @@
 *  
 *  此SDK采用低价收费授权,公司性质的合作,为了您项目更好的进行,欢迎和我们联系.谢谢!
 *  
-
-##联系方式:QQ 1852600324; Email:support@lansongtech.com
+###下载地址:
+		https://github.com/LanSoSdk/LanSoEditor_common
+##联系方式:
+*   QQ 1852600324 
+*   Email:support@lansongtech.com
 
 ###您可以直接下载APK来安装测试:
   [LanSoEditor_common.apk][id]
 [id]:http://files.cnblogs.com/files/guobaPlayer/LanSoEditor_common.apk 
-
-
-####我们有免费的,仅供个人视频爱好者使用的版本,欢迎您的使用
-*   下载地址 https://github.com/LanSoSdk/video_play_edit_sdk  
-   
-
 
 ###本SDK的编解码有:
 *  软解码器H264
@@ -32,6 +29,13 @@
 *  硬编码器lansoh264_enc
 *  音频mp3编码器libmp3lame
 *  音频aac编码器 faac
+
+####我们有免费的,仅供个人视频爱好者使用的版本,欢迎您的使用
+*   下载地址 https://github.com/LanSoSdk/video_play_edit_sdk  
+   
+
+
+
 
 
 

@@ -767,15 +767,28 @@ public class VideoEditor {
 		  }
 		  
 		  /**
-		   * 裁剪一个mp4分辨率，把视频画面的某一部分裁剪下来，
-		   * @param videoFile　　需要裁剪的视频文件
-		   * @param cropWidth　　裁剪的宽度
+		   * 
+		   * @param videoFile　
+		   * @param cropWidth　
 		   * @param cropHeight　裁剪的高度
-		   * @param x　　视频画面开始的Ｘ坐标，　从画面的左上角开始是0.0坐标
-		   * @param y　　视频画面开始的Y坐标，
-		   * @param dstFile　　处理后保存的路径,后缀需要是mp4
+		   * @param x　
+		   * @param y　　
+		   * @param dstFile　　
 		   * @return
-		   *  ./ffmpeg -i test_720p.mp4 -vf crop=480:480:0:0 -acodec copy testcrop.mp4,暂时使用软编码,后面再优化硬编码
+		   */
+		  /**
+		   * 裁剪一个mp4分辨率，把视频画面的某一部分裁剪下来，
+		   * 
+		   * @param videoFile　需要裁剪的视频文件
+		   * @param cropWidth　裁剪的宽度
+		   * @param cropHeight 　裁剪的宽度
+		   * @param x  　视频画面开始的Ｘ坐标，　从画面的左上角开始是0.0坐标
+		   * @param y 视频画面开始的Y坐标，
+		   * @param dstFile 处理后保存的路径,后缀需要是mp4
+		   * @param codecname  使用的解码器的名字
+		   * @param bitrate  <============注意:这里的bitrate在设置的时候, 因为是设置编码器的恒定码率, 推荐设置为 预设值的1.5倍为准, 比如视频原有的码率是1M,则裁剪一半,预设值可能是500k, 
+		   * 这里推荐是为500k的1.5,因为原有的视频大部分是动态码率VBR,可以认为通过{@link MediaInfo} 得到的 {@link MediaInfo#vBitRate}是平均码率,这里要设置,推荐是1.5倍为好.
+		   * @return
 		   */
 		  public int executeVideoFrameCrop(String videoFile,int cropWidth,int cropHeight,int x,int y,String dstFile,String codecname,int bitrate)
 		  {
@@ -819,15 +832,24 @@ public class VideoEditor {
 		  }
 		  
 		 /**
-		  * 视频画面缩放, 务必保持视频的缩放后的宽高比,等于原来视频的宽高比.
-		  * 此视频缩放算法，采用是软缩放来实现，速度不是很快，适用在时长短的视频。　我们有更快速的视频缩放方法，请联系我们
+		  * 
 		  * @param videoFile
 		  * @param scaleWidth
 		  * @param scaleHeight
 		  * @param dstFile
 		  * @return
-		  * ./ffmpeg -i test_720p.mp4 -vf scale=480:270 -acodec copy scale1.mp4  
 		  */
+		  /**
+		   * 视频画面缩放, 务必保持视频的缩放后的宽高比,等于原来视频的宽高比.
+		   * 此视频缩放算法，采用是软缩放来实现，速度不是很快，适用在时长短的视频。　我们有更快速的视频缩放方法，请联系我们
+		   * @param videoFile
+		   * @param scaleWidth
+		   * @param scaleHeight
+		   * @param dstFile
+		   * @param bitrate  <============注意:这里的bitrate在设置的时候, 因为是设置编码器的恒定码率, 推荐设置为 预设值的1.5倍为准, 比如视频原有的码率是1M,则裁剪一半,预设值可能是500k, 
+		   * 这里推荐是为500k的1.5,因为原有的视频大部分是动态码率VBR,可以认为通过{@link MediaInfo} 得到的 {@link MediaInfo#vBitRate}是平均码率,这里要设置,推荐是1.5倍为好.
+		   * @return
+		   */
 		  public int executeVideoFrameScale(String videoFile,int scaleWidth,int scaleHeight,String dstFile,int bitrate){
 			  if(FileUtils.fileExist(videoFile)){
 					
@@ -875,6 +897,8 @@ public class VideoEditor {
 		   * @param jpgprefix　图片的文件名有规律的前缀
 		   * @param framerate　每秒钟需要显示几张图片
 		   * @param dstPath　　处理后保存的路径，需要文件后缀是.mp4
+		   * @param bitrate  <============注意:这里的bitrate在设置的时候, 因为是设置编码器的恒定码率, 推荐设置为 预设值的1.5倍为准, 比如视频原有的码率是1M,则裁剪一半,预设值可能是500k, 
+		   * 这里推荐是为500k的1.5,因为原有的视频大部分是动态码率VBR,可以认为通过{@link MediaInfo} 得到的 {@link MediaInfo#vBitRate}是平均码率,这里要设置,推荐是1.5倍为好.
 		   * @return
 		   */
 		  //./ffmpeg -framerate 1 -i r5r-%03d.jpeg -c:v libx264 -r 25 -pix_fmt yuv420p out33.mp4
@@ -923,6 +947,8 @@ public class VideoEditor {
 		   * @param x　　叠加图片相对于视频的Ｘ坐标，视频的左上角为坐标原点0.0
 		   * @param y　　叠加图片相对于视频的Ｙ坐标
 		   * @param dstFile　　处理后保存的路径，后缀需要是.mp4格式
+		   * @param bitrate  <============注意:这里的bitrate在设置的时候, 因为是设置编码器的恒定码率, 推荐设置为 预设值的1.5倍为准, 比如视频原有的码率是1M,则裁剪一半,预设值可能是500k, 
+		   * 这里推荐是为500k的1.5,因为原有的视频大部分是动态码率VBR,可以认为通过{@link MediaInfo} 得到的 {@link MediaInfo#vBitRate}是平均码率,这里要设置,推荐是1.5倍为好.
 		   * @return
 		   */
 		  public int executeAddWaterMark(String videoFile,String imagePngPath,int x,int y,String dstFile,int bitrate){
@@ -980,6 +1006,8 @@ public class VideoEditor {
 		  * @param x　　叠加图片相对于视频的Ｘ坐标，视频的左上角为坐标原点0.0
 		  * @param y　　叠加图片相对于视频的Ｙ坐标
 		  * @param dstFile  处理后保存的路径，后缀需要是mp4格式
+		  * @param bitrate  <============注意:这里的bitrate在设置的时候, 因为是设置编码器的恒定码率, 推荐设置为 预设值的1.5倍为准, 比如视频原有的码率是1M,则裁剪一半,预设值可能是500k, 
+		   * 这里推荐是为500k的1.5,因为原有的视频大部分是动态码率VBR,可以认为通过{@link MediaInfo} 得到的 {@link MediaInfo#vBitRate}是平均码率,这里要设置,推荐是1.5倍为好.
 		  * @return
 		  */
 		  public int executeAddWaterMark(String videoFile,String imagePngPath,float startTimeS,float endTimeS,int x,int y,String dstFile,int bitrate)

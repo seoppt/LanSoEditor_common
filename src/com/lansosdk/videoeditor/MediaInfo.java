@@ -8,7 +8,7 @@ import android.os.Message;
 import android.util.Log;
 
 /**
- *  暂时只支持一个音频和一个视频,如果有多个音频,则音频数据是最后一个音频的info.
+ *  暂时只支持一个音频和一个视频组成的多媒体文件,如MP4等,如果有多个音频,则音频数据是最后一个音频的info.
  *
  */
 public class MediaInfo {
@@ -24,6 +24,11 @@ public class MediaInfo {
      public  int vWidth;
      public  int vCodecHeight;
      public  int vCodecWidth;    
+     
+     /**
+      * 视频的码率,注意,一般的视频编码时采用的是动态码率VBR,故这里得到的是平均值, 建议在使用时,乘以1.5后,使用.
+      * 
+      */
      public int vBitRate; 
      /**
       * 视频文件中的视频流总帧数.
