@@ -14,7 +14,8 @@
 
 ###下载地址: 
 *  https://github.com/LanSoSdk/LanSoEditor_common
-##联系方式:
+
+###联系方式:
 *   QQ 1852600324 
 *   Email:support@lansongtech.com
 
