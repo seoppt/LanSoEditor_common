@@ -1,7 +1,6 @@
 # LanSoEditor_common  ---android平台的视频编辑SDK
 
-###当前版本是LanSoEditor-v1.2
-
+###当前版本是LanSoEditor-v1.3
 *  主要使用在音视频的: 裁剪,剪切,分离,合并,转换,拼接,水印,叠加,混合,转码等场合;
 *  
 *  我们是针对android平台对ffmpeg做了硬件加速优化,经过多款手机的测试,优化性能大概提升4倍左右
