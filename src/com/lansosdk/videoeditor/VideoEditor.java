@@ -815,7 +815,7 @@ public class VideoEditor {
 					cmdList.add("-b:v");
 					cmdList.add(String.valueOf(bitrate)); 
 					
-					cmdList.add("-pix_fmt");  //编码的时候,指定yuv420p
+					cmdList.add("-pix_fmt");  //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
 					cmdList.add("yuv420p");
 					
 					cmdList.add("-y");
@@ -874,7 +874,7 @@ public class VideoEditor {
 					cmdList.add("-b:v");
 					cmdList.add(String.valueOf(bitrate)); 
 										
-					cmdList.add("-pix_fmt");  //编码的时候,指定yuv420p
+					cmdList.add("-pix_fmt");   //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
 					cmdList.add("yuv420p");
 					
 					cmdList.add("-y");
@@ -923,7 +923,7 @@ public class VideoEditor {
 					cmdList.add("-b:v");
 					cmdList.add(String.valueOf(bitrate)); 
 					
-					cmdList.add("-pix_fmt");
+					cmdList.add("-pix_fmt"); //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
 					cmdList.add("yuv420p"); 
 					
 					cmdList.add("-y");
@@ -979,7 +979,7 @@ public class VideoEditor {
 					cmdList.add("-b:v");
 					cmdList.add(String.valueOf(bitrate)); 
 					
-					cmdList.add("-pix_fmt");  //编码的时候,指定yuv420p
+					cmdList.add("-pix_fmt");   //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
 					cmdList.add("yuv420p");
 					
 					cmdList.add("-y");
@@ -1038,7 +1038,7 @@ public class VideoEditor {
 					cmdList.add("-b:v");
 					cmdList.add(String.valueOf(bitrate)); 
 					
-					cmdList.add("-pix_fmt");  //编码的时候,指定yuv420p
+					cmdList.add("-pix_fmt");   //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
 					cmdList.add("yuv420p");
 					
 					cmdList.add("-y");
@@ -1093,7 +1093,7 @@ public class VideoEditor {
 					cmdList.add("-b:v");
 					cmdList.add(String.valueOf(cfg.bitRate)); 
 					
-					cmdList.add("-pix_fmt");  //编码的时候,指定yuv420p
+					cmdList.add("-pix_fmt");   //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
 					cmdList.add("yuv420p");
 					
 					cmdList.add("-y");

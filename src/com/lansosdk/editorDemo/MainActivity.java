@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 	{
 		new AlertDialog.Builder(this)
 		.setTitle("提示")
-		.setMessage("SDK版本号是V1.2 [商用版本]\n\n,SDK底层做了授权限制,仅可在此demo中运行,并有效时间到2016年9月30号,请注意.)")
+		.setMessage("SDK版本号是V1.3 [商用版本]\n\n,SDK底层做了授权限制,仅可在此demo中运行,并有效时间到2016年9月30号,请注意.)")
         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			
 			@Override

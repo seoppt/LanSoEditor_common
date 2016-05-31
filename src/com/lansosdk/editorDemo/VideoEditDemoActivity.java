@@ -160,7 +160,7 @@ public class VideoEditDemoActivity extends Activity{
       	    	
 //      	    	mEditor.executeConvertMp4toTs("/sdcard/2x.mp4","/sdcard/2x0.ts");
       	    	//因为静态码率
-//      	    	mEditor.executeAddWaterMark("/sdcard/2x.mp4","/sdcard/watermark.png",0,0,"/sdcard/2xmark3.mp4",(int)(mMediaInfo.vBitRate*1.5f));
+//      	    	mEditor.executeAddWaterMark(videoPath,"/sdcard/watermark.png",0,0,"/sdcard/A2.mp4",(int)(mMediaInfo.vBitRate*1.5f));
       	    	
       	    	
       	    	
