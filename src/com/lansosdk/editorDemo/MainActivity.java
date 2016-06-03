@@ -103,10 +103,35 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
+				delayShow();
 			}
 		})
         .show();
 	}
+    private void delayShow(){
+    	new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				showHintDialog2();
+			}
+		}, 300);
+    }
+    private void showHintDialog2()
+  	{
+  		new AlertDialog.Builder(this)
+  		.setTitle("提示")
+  		.setMessage("我们有高级版本,类似photoshop的工作区一样,可以任意的增删视频/图片/文字/canvas/声音等,欢迎联系我们,获取相关的演示代码)")
+          .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+  			
+  			@Override
+  			public void onClick(DialogInterface dialog, int which) {
+  				// TODO Auto-generated method stub
+  			}
+  		})
+          .show();
+  	}
     
     @Override
     protected void onDestroy() {
