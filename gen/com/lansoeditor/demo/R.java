@@ -554,11 +554,12 @@ R35 B50,G71
         public static final int id_player_control_linear=0x7f080004;
         public static final int id_player_pause=0x7f080006;
         public static final int id_player_start=0x7f080005;
-        public static final int id_video_edit_btn=0x7f080010;
-        public static final int id_video_edit_progress_hint=0x7f08000f;
-        public static final int id_video_editor_demo_hint=0x7f08000e;
-        public static final int id_video_play_btn=0x7f080011;
+        public static final int id_video_edit_btn=0x7f080011;
+        public static final int id_video_edit_progress_hint=0x7f080010;
+        public static final int id_video_editor_demo_hint=0x7f08000f;
+        public static final int id_video_play_btn=0x7f080012;
         public static final int surface1=0x7f08000d;
+        public static final int surface2=0x7f08000e;
         public static final int video_view=0x7f080003;
     }
     public static final class layout {
@@ -607,5 +608,10 @@ R35 B50,G71
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int main_item_arrow=0x7f070006;
+        public static final int main_item_linearlayout=0x7f070003;
+        public static final int main_item_reletivelayout=0x7f070002;
+        public static final int main_item_textview1=0x7f070004;
+        public static final int main_item_textview2=0x7f070005;
     }
 }

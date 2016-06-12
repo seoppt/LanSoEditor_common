@@ -44,6 +44,27 @@ public class MainActivity extends Activity {
         etVideoPath=(EditText)findViewById(R.id.id_main_etvideo);
         etVideoPath.setText("/sdcard/2x.mp4");
        
+//        MediaInfo info=new MediaInfo("/sdcard/x3_m7crash.mp4");
+//        info.prepare();
+//        Log.i(TAG,"info:"+info.toString());
+        
+//         info=new MediaInfo("/sdcard/x3.mp4");
+//        info.prepare();
+//        Log.i(TAG,"info:"+info.toString());
+//        
+//         info=new MediaInfo("/sdcard/2x.mp4");
+//        info.prepare();
+//        Log.i(TAG,"info:"+info.toString());
+//        
+//         info=new MediaInfo("/sdcard/test_720p.mp4");
+//        info.prepare();
+//        Log.i(TAG,"info:"+info.toString());
+//        
+//         info=new MediaInfo("/sdcard/x2.mp4");
+//        info.prepare();
+//        Log.i(TAG,"info:"+info.toString());
+        
+        
         findViewById(R.id.id_main_demoplay).setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -59,6 +80,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if(checkPath())
+				//	startVideoPlayDemo();
+				
 					startVideoEditDemo();
 			}
 		});
@@ -68,16 +91,29 @@ public class MainActivity extends Activity {
         }else{
         	Log.i("sno","当前有读写权限");
         }
-//	new Handler().postDelayed(new Runnable() {
+    }
+    private boolean isstarted=false;
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	
+//    	if(isstarted)
+//    		return;
+//    	
+//    	new Handler().postDelayed(new Runnable() {
 //			
 //			@Override
 //			public void run() {
 //				// TODO Auto-generated method stub
+//				isstarted=true;
+//				
 //				startVideoEditDemo();
 //			//	startVideoPlayDemo();
 //			}
-//		}, 100);
-        showHintDialog();
+//		}, 1000);
+      //  showHintDialog();
+
     }
     private void showHintDialog(String hint){
     	new AlertDialog.Builder(this)
@@ -97,41 +133,16 @@ public class MainActivity extends Activity {
 	{
 		new AlertDialog.Builder(this)
 		.setTitle("提示")
-		.setMessage("SDK版本号是V1.3 [商用版本]\n\n,SDK底层做了授权限制,仅可在此demo中运行,并有效时间到2016年9月30号,请注意.)")
+		.setMessage("SDK版本号是V1.2 [商用版本]\n\n,SDK底层做了授权限制,仅可在此demo中运行,并有效时间到2016年9月30号,请注意.)")
         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
-				delayShow();
 			}
 		})
         .show();
 	}
-    private void delayShow(){
-    	new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				showHintDialog2();
-			}
-		}, 300);
-    }
-    private void showHintDialog2()
-  	{
-  		new AlertDialog.Builder(this)
-  		.setTitle("提示")
-  		.setMessage("我们有高级版本,类似photoshop的工作区一样,可以任意的增删视频/图片/文字/canvas/声音等,欢迎联系我们,获取相关的演示代码)")
-          .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-  			
-  			@Override
-  			public void onClick(DialogInterface dialog, int which) {
-  				// TODO Auto-generated method stub
-  			}
-  		})
-          .show();
-  	}
     
     @Override
     protected void onDestroy() {
@@ -152,6 +163,9 @@ public class MainActivity extends Activity {
     			Toast.makeText(MainActivity.this, "文件不存在", Toast.LENGTH_SHORT).show();
     			return false;
     		}else{
+    			MediaInfo info=new MediaInfo(path);
+    	        info.prepare();
+    	        Log.i(TAG,"info:"+info.toString());
     			return true;
     		}
     	}

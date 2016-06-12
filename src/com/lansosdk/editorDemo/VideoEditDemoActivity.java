@@ -1,5 +1,6 @@
 package com.lansosdk.editorDemo;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import com.lansoeditor.demo.R;
 import com.lansosdk.videoeditor.MediaInfo;
 import com.lansosdk.videoeditor.VideoEditor;
-import com.lansosdk.videoeditor.VideoEditor.onProgressListener;
+import com.lansosdk.videoeditor.onVideoEditorProgressListener;
 import com.lansosdk.videoeditor.utils.FileUtils;
 import com.lansosdk.videoeditor.utils.snoCrashHandler;
 
@@ -35,7 +36,10 @@ public class VideoEditDemoActivity extends Activity{
 	boolean isRuned=false;
 	MediaInfo   mMediaInfo;
 	TextView tvProgressHint;
+	TextView  tvHint;
 	private final static String TAG="videoEditDemoActivity";
+	private static final boolean VERBOSE = false;   
+	private String dstPath="/sdcard/video_demo_framecrop.mp4";
 	
 	  @Override
 	    protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,10 @@ public class VideoEditDemoActivity extends Activity{
 				
 			 mMediaInfo=new MediaInfo(videoPath);
 				
-			
+			 tvHint=(TextView)findViewById(R.id.id_video_editor_demo_hint);
+			 tvHint.setText(R.string.video_editor_demo_hint);
 			 tvProgressHint=(TextView)findViewById(R.id.id_video_edit_progress_hint);
+			 
 			 
 	        findViewById(R.id.id_video_edit_btn).setOnClickListener(new OnClickListener() {
 				
@@ -75,10 +81,9 @@ public class VideoEditDemoActivity extends Activity{
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					if(FileUtils.fileExist("/sdcard/video_demo_framecrop.mp4")){
-						String path="/sdcard/video_demo_framecrop.mp4";
+					if(FileUtils.fileExist(dstPath)){
 				    	Intent intent=new Intent(VideoEditDemoActivity.this,VideoPlayerActivity.class);
-				    	intent.putExtra("videopath", path);
+				    	intent.putExtra("videopath", dstPath);
 				    	startActivity(intent);
 					}else{
 						Toast.makeText(VideoEditDemoActivity.this, R.string.file_not_exist,Toast.LENGTH_SHORT).show();
@@ -86,33 +91,25 @@ public class VideoEditDemoActivity extends Activity{
 				}
 			});
 	        
-	        
-	        mEditor.setOnProgessListener(new onProgressListener() {
+	        mEditor.setOnProgessListener(new onVideoEditorProgressListener() {
 				
 				@Override
 				public void onProgress(VideoEditor v, int percent) {
 					// TODO Auto-generated method stub
-					
 					Log.i(TAG,"current percent is:"+percent);
 					tvProgressHint.setText(String.valueOf(percent)+"%");
 				}
 			});
-	        
-//
-//	       if(isRuned==false){
-//		       isRuned=true;
-//	    	   new Handler().postDelayed(new Runnable() {
-//	   			
-//		   			@Override
-//		   			public void run() {
-//		   				// TODO Auto-generated method stub
-//		   				mMediaInfo.prepare();
-//						Log.i(TAG,mMediaInfo.toString());
-//		   				new SubAsyncTask().execute();
-//		   			}
-//	   			}, 1000);
-//	       }
 	  } 
+	  @Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
+        if(FileUtils.fileExist(dstPath)){
+        	FileUtils.deleteFile(dstPath);
+        }
+	}
 		private void showHintDialog()
 		{
 			new AlertDialog.Builder(this)
@@ -153,26 +150,23 @@ public class VideoEditDemoActivity extends Activity{
 //      	    			mEditor.executeDeleteVideo("/sdcard/2x.mp4","/sdcard/2x_nov.aac");
 //      	    		}
 //      	    	}
-      	    //	mEditor.executeVideoCutOut("/sdcard/2x.mp4","/sdcard/2x_cut.mp4",5,5);
-//      	    	mEditor.executeGetAllFrames("/sdcard/2x.mp4","/sdcard/","getpng");
-      	    	mEditor.executeVideoFrameCrop(videoPath, 240, 240, 0, 0, "/sdcard/video_demo_framecrop.mp4",mMediaInfo.vCodecName,mMediaInfo.vBitRate);
+      	    	
+//      	    	mEditor.executeVideoCutOut(videoPath,"/sdcard/2x_cut.mp4",5,5);
+//	mEditor.executeGetAllFrames("/sdcard/2x.mp4","/sdcard/","getpng");
+      	    	
+      	    	mEditor.executeVideoFrameCrop(videoPath, 240, 240, 0, 0, dstPath,mMediaInfo.vCodecName,mMediaInfo.vBitRate);
       	    	
       	    	
 //      	    	mEditor.executeConvertMp4toTs("/sdcard/2x.mp4","/sdcard/2x0.ts");
       	    	//因为静态码率
-//      	    	mEditor.executeAddWaterMark(videoPath,"/sdcard/watermark.png",0,0,"/sdcard/A2.mp4",(int)(mMediaInfo.vBitRate*1.5f));
-      	    	
-      	    	
+//      	    	mEditor.executeAddWaterMark("/sdcard/test_720p.mp4","/sdcard/watermark.png",0,0,"/sdcard/A1.mp4",(int)(mMediaInfo.vBitRate*1.5f));
       	    	
       	    //	mEditor.pictureFadeInOut("/sdcard/testfade.png",3,0,40,50,75,"/sdcard/testfade.mp4");
       	    //	mEditor.pictureFadeIn("/sdcard/testfade.png",3,0,60,"/sdcard/testfade2.mp4");
       	//  	mEditor.pictureFadeOut("/sdcard/testfade.png",3,0,60,"/sdcard/testfade3.mp4");
       	    	
-      	    	
-      	    	//String srcVideoPath,String srcPngPath,int totalTime,int offsetTime,int fadeinStart,int fadeoutCnt,int x,int y,String dstPath);
-      	    	
       	    //	mEditor.waterMarkFadeIn("/sdcard/2x.mp4","/sdcard/watermark.png",2,5,0,30,0,0,"/sdcard/2xmarkfade.mp4");
-      	    //	mEditor.videoRotateAngle("/sdcard/2x.mp4", mMediaInfo.vCodecName, 60, "/sdcard/2x_angle.mp4");
+//      	    	mEditor.executeRotateAngle("/sdcard/2x.mp4", mMediaInfo.vCodecName, 90, "/sdcard/F1.mp4",1000000);
       	    	
       	    	//这里检测mp3的时长,
 //      	    	mEditor.audioAdjustVolumeMix("/sdcard/hongdou.mp3", "/sdcard/kaimendaji.mp3", 3.0f, 0.5f, "/sdcard/hongdouxxx.mp3");
@@ -193,7 +187,7 @@ public class VideoEditDemoActivity extends Activity{
 	       		 mProgressDialog.cancel();
 	       		 mProgressDialog=null;
     		}
-    		Log.i(TAG,"onpost-------------------end");
+    		Log.i(TAG,"onPostExecute-------------------end");
     	}
     }
 }

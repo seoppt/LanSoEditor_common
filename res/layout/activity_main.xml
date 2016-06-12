@@ -20,59 +20,141 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="2"/>
-    
-     <RelativeLayout 
-         android:id="@+id/id_main_demoplay"
-	        android:layout_width="match_parent"
-	        android:layout_height="60dip"
-	        android:gravity="center_vertical"
-	        android:background="#FFFFFF"
-	        android:layout_marginTop="20dip"
-	         >
-	         <TextView 
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_centerVertical="true"
-		        android:layout_marginLeft="10dip"
-		        android:text="演示视频播放(参考功能)"
-		        android:textStyle="bold"
-		        android:textSize="18dip"/>
-			        <TextView 
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-		       		 android:layout_centerVertical="true"
-			        android:layout_alignParentRight="true"
-		    	    android:layout_marginRight="20dip"
-			            android:background="@drawable/right_arrow"/> 
-	</RelativeLayout>
+   
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <RelativeLayout  android:id="@+id/id_main_demoplay" style="@style/main_item_reletivelayout">
+		         <LinearLayout style="@style/main_item_linearlayout" android:clickable="false">
+	           	    <TextView   android:text="原生视频播放" 	        style="@style/main_item_textview1"/>
+	           	    <TextView android:text="ffmpeg为核心的播放器"		style="@style/main_item_textview2"/>
+				</LinearLayout>
+				<TextView  style="@style/main_item_arrow"/> 
+			</RelativeLayout>
 	
-    <RelativeLayout 
-         android:id="@+id/id_main_demoedit"
-	        android:layout_width="match_parent"
-	        android:layout_height="60dip"
-	        android:gravity="center_vertical"
-	        android:background="#FFFFFF"
-	        android:layout_marginTop="20dip"
-	         >
-	         <TextView 
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_centerVertical="true"
-		        android:layout_marginLeft="10dip"
-		        android:text="演示视频编辑(核心功能)"
-		        android:textStyle="bold"
-		        android:textSize="18dip"/>
 	
-			        <TextView 
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-		       		 android:layout_centerVertical="true"
-			        android:layout_alignParentRight="true"
-		    	    android:layout_marginRight="20dip"
-			            android:background="@drawable/right_arrow"/> 
-	</RelativeLayout>
-	
-    <RelativeLayout 
+      <RelativeLayout   android:id="@+id/id_main_demoedit" style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+            
+          <!--   
+  	<RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	    <RelativeLayout   style="@style/main_item_reletivelayout">
+	         <LinearLayout style="@style/main_item_linearlayout">
+           	    <TextView   android:text="原生视频编辑" 	        style="@style/main_item_textview1"/>
+           	    <TextView android:text="ffmpeg硬件加速快速处理"		style="@style/main_item_textview2"/>
+			</LinearLayout>
+			<TextView  style="@style/main_item_arrow"/> 
+	  </RelativeLayout>
+	         -->
+	    
+	       <RelativeLayout 
 	        android:layout_width="match_parent"
 	        android:layout_height="150dip"
 	        android:gravity="center_vertical"
@@ -88,5 +170,20 @@
 		        android:textColor="#0000ff"/>
 			      
 	</RelativeLayout>
+	
+            
+        </LinearLayout>
+    </ScrollView>
+     
+	
+      
+      
+      
+      
+      
+      
+	
+      
+ 
 
 </LinearLayout>

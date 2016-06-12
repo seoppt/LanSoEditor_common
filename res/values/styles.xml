@@ -17,4 +17,46 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    
+    
+    
+    <style name="main_item_reletivelayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dip</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:layout_marginTop">20dip</item>
+    </style>
+    
+      <style name="main_item_linearlayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginLeft">10dip</item>
+    </style>
+    
+         <style name="main_item_textview1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">10dip</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+      
+    <style name="main_item_textview2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>	   
+           	  
+     <style name="main_item_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">20dip</item>
+        <item name="android:background">@drawable/right_arrow</item>
+    </style>	   
 </resources>

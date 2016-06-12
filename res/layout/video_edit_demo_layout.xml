@@ -10,8 +10,7 @@
         android:id="@+id/id_video_editor_demo_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dip"
-        android:text="@string/video_editor_demo_hint"/>
+        android:layout_margin="20dip"/>
     
     
         <TextView  

@@ -1,7 +1,8 @@
 package com.lansosdk.videoeditor;
 
 
-import com.lansosdk.videoeditor.utils.FileUtils;
+
+import java.io.File;
 
 import android.content.Context;
 import android.os.Message;
@@ -15,6 +16,7 @@ public class MediaInfo {
 //
 
 	 private static final String TAG="MediaInfo";
+	 private static final boolean VERBOSE = true; 
 	 
 	 /***************video track info(total 12)*************** */
 	 /**
@@ -57,19 +59,24 @@ public class MediaInfo {
      public String  aCodecName;
     
      
-     private String mfilePath;
+     public final String filePath;
+     public final String fileName; //视频的文件名, 路径的最后一个/后的字符串.
+     public final String fileSuffix; //文件的后缀名.
+     
      private boolean getSuccess=false;
      
-     public MediaInfo(String filePath)
+     public MediaInfo(String path)
      {
-    	 mfilePath=filePath;
+    	 filePath=path;
+    	 fileName=getFileNameFromPath(path);
+    	 fileSuffix=getFileSuffix(path);
      }
      
      public int prepare()
      {
     	int ret=0;
-    	 if(FileUtils.fileExist(mfilePath)){ //这里检测下mfilePath是否是多媒体后缀.
-    		 ret= nativePrepare(mfilePath);	 
+    	 if(fileExist(filePath)){ //这里检测下mfilePath是否是多媒体后缀.
+    		 ret= nativePrepare(filePath);	 
     		 if(ret>=0)
     			 getSuccess=true;
     	 }else{
@@ -78,16 +85,57 @@ public class MediaInfo {
     	 } 
     	 return ret;
      }
-     
      public void release()
      {
     	 //TODO nothing 
     	 getSuccess=false;
      }
+     /**
+      * 传递过来的文件是否支持
+      * 
+      * @return
+      */
+     public boolean isSupport()
+     {
+    	 //既没有音频,又没有视频,则不支持.
+    	 if(vBitRate <=0 && aBitRate<=0)
+    		 return false;
+    	 
+    	 if(vBitRate>0)  //有视频,
+    	 {
+    		 if(vHeight==0 || vWidth==0)
+    		 {
+    			 return false;
+    		 }
+    		 if(vFrameRate>60) //如果帧率大于60帧, 则不支持.  
+    			 return false;
+    		 
+    		 if(vCodecName==null || vCodecName.isEmpty())
+    			 return false;
+    		 
+    		 if(vDuration<3)
+    			 return false;
+    		 
+    	 }else if(aBitRate>0)  //有音频
+    	 {
+    		 if(aChannels==0)
+    			 return false;
+    		 
+    		 if(aCodecName==null || aCodecName.isEmpty())
+    			 return false;
+    		 
+    		 if(aDuration<3)
+    			 return false;
+    	 }
+   
+    	 return true;
+     }
      @Override
     public String toString() {
     	// TODO Auto-generated method stub
-    	 String info="file name:"+mfilePath+"\n";
+    	 String info="file name:"+filePath+"\n";
+    	 info+= "fileName:"+fileName+"\n";
+    	 info+= "fileSuffix:"+fileSuffix+"\n";
     	 info+= "vHeight:"+vHeight+"\n";
     	 info+= "vWidth:"+vWidth+"\n";
     	 info+= "vCodecHeight:"+vCodecHeight+"\n";
@@ -114,7 +162,7 @@ public class MediaInfo {
     	else
     	 return "MediaInfo is not ready.or call failed";
     }
-     private  native int nativePrepare(String filepath);
+     public native int nativePrepare(String filepath);
      
      //used by JNI
      private void setVideoCodecName(String name)
@@ -131,8 +179,56 @@ public class MediaInfo {
      {
     	 this.aCodecName=name;
      }
+     public static boolean isSupport(String videoPath)
+     {
+    	 if(fileExist(videoPath))
+    	 {
+    		 MediaInfo  info=new MediaInfo(videoPath);
+        	 info.prepare();
+        	 if(VERBOSE){
+        		 Log.i(TAG,"video:"+videoPath+" "+info.isSupport());
+        		 Log.i(TAG,"video:"+info.toString());
+        	 }
+        	 return info.isSupport();
+    	 }else{
+    		 if(VERBOSE)
+    			 Log.i(TAG,"video:"+videoPath+" not support");
+    		 
+    		 return false;
+    	 }
+     }
+     //-------------------------------文件操作-------------------------
+     private static boolean fileExist(String absolutePath)
+	 {
+		 if(absolutePath==null)
+			 return false;
+		 else 
+			 return (new File(absolutePath)).exists();
+	 }
+     
+     private  String getFileNameFromPath(String path){
+	        if (path == null)
+	            return "";
+	        int index = path.lastIndexOf('/');
+	        if (index> -1)
+	            return path.substring(index+1);
+	        else
+	            return path;
+	    }
+     private  String getFileSuffix(String path){
+	        if (path == null)
+	            return "";
+	        int index = path.lastIndexOf('.');
+	        if (index> -1)
+	            return path.substring(index+1);
+	        else
+	            return "";
+	    }
+     
+     
      
      /*
+      * ****************************************************************************
       * 测试
  //        new Thread(new Runnable() {
 //			

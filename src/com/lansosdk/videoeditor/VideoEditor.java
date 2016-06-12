@@ -1,13 +1,13 @@
 package com.lansosdk.videoeditor;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.lansosdk.editorDemo.WaterMarkConfig;
-import com.lansosdk.videoeditor.utils.FileUtils;
 
 
 import android.os.Handler;
@@ -42,20 +42,12 @@ public class VideoEditor {
 	}
 	
 	
-	 public interface onProgressListener {
-			/**
-			 * 
-			 * @param v
-			 * @param currentTime  当前正在处理的视频帧的时间戳.即当前的位置.
-			 */
-	        void onProgress(VideoEditor v,int percent);
-	    }
-	    public onProgressListener mProgressListener=null;
+	    public onVideoEditorProgressListener mProgressListener=null;
 	    /**
 	     * 开始执行后,每秒钟更新一次. 
 	     * @param listener
 	     */
-		public void setOnProgessListener(onProgressListener listener)
+		public void setOnProgessListener(onVideoEditorProgressListener listener)
 		{
 			mProgressListener=listener;
 		}
@@ -106,25 +98,14 @@ public class VideoEditor {
                   mEventHandler.sendMessage(msg);	
               }
 	    }
-	    @SuppressWarnings("unused")
-	    private static int audioGetSandValue(String arg1,String arg2)
-	    {
-	    	return AudioEncodeDecode.decodeAudio(arg1, arg2);
-	    }
-	    @SuppressWarnings("unused")
-	    private static int audioPutSandValue(String arg1,String arg2,float arg3, float arg4,int arg5,int arg6,int arg7)
-	    {
-	    	return AudioEncodeDecode.encodePcmData(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-	    }
+	    
 	    private native int execute(Object cmdArray);
-	    
-	    
-	    
 	
 	public int vAdjustSpped(String srcPath,MediaInfo media,String dstPath)
 	{
 		return videoAdjustSpeed(srcPath,media.vCodecName,2,dstPath);
 	}
+	
 
 	/**
 	 * 把一张图片转换为视频,并有淡入淡出的效果.
@@ -163,7 +144,7 @@ public class VideoEditor {
 	 */
 	public native int  pictureFadeOut( String srcPath,int totalTime,int fadeoutstart,int fadeoutCnt,String dstPath);
 	/**
-	 *  给视频增加一个水印，这个水印有渐渐显示出来的效果
+	 *  给视频增加一个水印，这个水印有渐渐显示出来的效果,类似秒拍结尾的时候, 在画面的中央有逐渐显示的动画一样的效果.
 	 * @param srcVideoPath　　　需要加水印的视频路径
 	 * @param srcPngPath　　　水印图片的路径，需要是png格式
 	 * @param totalTime　　　水印png的总时间，建议２秒
@@ -177,15 +158,6 @@ public class VideoEditor {
 	 */
 	public native int  waterMarkFadeIn( String srcVideoPath,String srcPngPath,int totalTime,int offsetTime,int fadeinStart,int fadeoutCnt,int x,int y,String dstPath);
 	/**
-	 * 给视频旋转角度
-	 * @param srcPath　需要旋转角度的原视频
-	 * @param decoder　　视频的解码器名字
-	 * @param angle　　角度
-	 * @param dstPath　　处理后的视频存放的路径,后缀需要是.mp4
-	 * @return
-	 */
-	public native int  videoRotateAngle( String srcPath,String decoder,float angle,String dstPath);
-	/**
 	 * 调整视频的播放速度，　可以把视频加快速度，或放慢速度。适用在希望缩短视频中不重要的部分的场景，比如走路等
 	 * @param srcPath　　源视频
 	 * @param decoder　　指定视频的解码器名字
@@ -193,7 +165,7 @@ public class VideoEditor {
 	 * @param dstPath　　处理后的视频存放路径，后缀需要是.mp4
 	 * @return
 	 */
-	private native int  videoAdjustSpeed( String srcPath,String decoder,float speed,String dstPath);
+	public native int  videoAdjustSpeed( String srcPath,String decoder,float speed,String dstPath);
 	/**
 	 * 视频水平镜像，即把视频左半部分镜像显示在右半部分
 	 * @param srcPath　源视频路径
@@ -201,8 +173,9 @@ public class VideoEditor {
 	 * @param dstPath　　目标视频路径
 	 * @return
 	 */
-	private native int  videoMirrorH( String srcPath,String decoder,String dstPath);
+	public native int  videoMirrorH( String srcPath,String decoder,String dstPath);
 	/**
+	 * 暂时不要使用.
 	 * 两个音频文件混合，可以一个是mp3格式，另一个是aac格式。　TODO:实际测试混合后的音频长度
 	 * @param srcPath1　　音频１的路径
 	 * @param srcPath2　　音频２的路径
@@ -211,8 +184,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标音频存放的路径。建议是aac格式
 	 * @return
 	 */
-	//暂时不用.
-//	public native int audioAdjustVolumeMix( String srcPath1,String srcPath2,float vol1,float vol2,String dstPath);
+	public native int audioAdjustVolumeMix( String srcPath1,String srcPath2,float vol1,float vol2,String dstPath);
 	/**
 	 * 视频转场，第二个视频从右侧渐渐的显示（可以联系我们，做更多的视频转场方法）　TODO:没有第二个视频从哪里开始转场。
 	 * @param srcPath1　　第一个视频
@@ -222,7 +194,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标视频存放路径　，需要是mp4
 	 * @return
 	 */
-	private native int videoTransferRight2Left( String srcPath1,String srcPath2,String decoder1,float speed,String dstPath);
+	public native int videoTransferRight2Left( String srcPath1,String srcPath2,String decoder1,float speed,String dstPath);
 	/**
 	 * 视频垂直方向反转
 	 * @param srcPath1　　原视频
@@ -230,7 +202,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标视频　需要是mp4格式。
 	 * @return
 	 */
-	private native int videoRotateVertically( String srcPath1,String decoder,String dstPath);
+	public native int videoRotateVertically( String srcPath1,String decoder,String dstPath);
 	/**
 	 * 视频水平方向反转
 	 * @param srcPath1　　原视频
@@ -238,7 +210,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标视频. 需要是mp4格式
 	 * @return
 	 */
-	private native int videoRotateHorizontally( String srcPath1,String decoder,String dstPath);
+	public native int videoRotateHorizontally( String srcPath1,String decoder,String dstPath);
 	/**
 	 * 视频顺时针旋转９０度
 	 * @param srcPath1　　原视频
@@ -246,7 +218,7 @@ public class VideoEditor {
 	 * @param dstPath　　　目标视频.需要是mp4格式
 	 * @return
 	 */
-	private native int videoRotate90Clockwise( String srcPath1,String decoder,String dstPath);
+	public native int videoRotate90Clockwise( String srcPath1,String decoder,String dstPath);
 	/**
 	 * 视频逆时针旋转９０度
 	 * @param srcPath1　原视频
@@ -254,7 +226,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标视频，需要是mp4格式
 	 * @return
 	 */
-	private native int videoRotate90CounterClockwise( String srcPath1,String decoder,String dstPath);
+	public native int videoRotate90CounterClockwise( String srcPath1,String decoder,String dstPath);
 	/**
 	 * 视频倒序；比如正常的视频画面是一个人从左边走到右边，倒序后，人从右边倒退到左边，即视频画面发生了倒序
 	 * 注意：此处理会占用大量的内存，建议视频不要过长，尽量在１分钟内
@@ -263,7 +235,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标视频，需要是mp4格式
 	 * @return
 	 */
-	private native int videoReverse( String srcPath1,String decoder,String dstPath);
+	public native int videoReverse( String srcPath1,String decoder,String dstPath);
 	/**
 	 * 音频倒序，和视频倒序类似，把原来正常的声音，处理成从后向前的声音。　适合在搞怪的一些场合。
 	 * 注意：　此处理会占用大量的内存，建议时长在１分钟以内
@@ -272,7 +244,7 @@ public class VideoEditor {
 	 * @param dstPath　　目标音频
 	 * @return
 	 */
-	private native int audioReverse( String srcPath1,String dstPath);
+	public native int audioReverse( String srcPath1,String dstPath);
 	/**
 	 * 　把一个mp4文件中的音频部分和视频都倒序播放。
 	 * @param srcPath1　　原mp4文件
@@ -280,8 +252,151 @@ public class VideoEditor {
 	 * @param dstPath　　目标mp4文件存放路径
 	 * @return
 	 */
-	private native int avReverse( String srcPath1,String decoder,String dstPath);
+	public native int avReverse( String srcPath1,String decoder,String dstPath);
 	    //--------------------------------------------------------------------------
+	/**
+	 * 通过调整视频的bitrate来对视频文件大小的压缩,降低视频文件的大小, 注意:压缩可能导致视频画质下降.
+	 * 
+	 * @param srcPath 源视频
+	 * @param dstPath 目的视频
+	 * @param percent 压缩百分比.
+	 * @return
+	 */
+		public int executeVideoCompress(String srcPath,String dstPath,float percent)
+		{
+			//ffmpeg -i 2x.mp4 -acodec copy -vcodec libx264 -b:v 200k 2xpress.mp4
+			if(fileExist(srcPath)){
+				
+				MediaInfo info=new MediaInfo(srcPath);
+				info.prepare();
+				if(info.vBitRate>0 && info.vCodecName.isEmpty()==false)
+				{
+					List<String> cmdList=new ArrayList<String>();
+			    	cmdList.add("-i");
+					cmdList.add(srcPath);
+					cmdList.add("-acodec");
+					cmdList.add("copy");
+					
+					cmdList.add("-vcodec");
+					cmdList.add(info.vCodecName);
+					
+					cmdList.add("-b:v");
+					float bitrate=info.vBitRate*percent;
+					int nbitrate=(int)bitrate;
+					cmdList.add(String.valueOf(nbitrate));
+					
+					cmdList.add("-pix_fmt");  //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
+					cmdList.add("yuv420p");
+					
+					cmdList.add("-y");
+					cmdList.add(dstPath);
+					String[] command=new String[cmdList.size()];  
+				     for(int i=0;i<cmdList.size();i++){  
+				    	 command[i]=(String)cmdList.get(i);  
+				     }  
+				     return executeVideoEditor(command);
+				}
+		  	}
+			return VIDEO_EDITOR_EXECUTE_FAILED;
+		}
+	
+	
+		/**
+		 * 暂时不检查别的线程是否有执行.
+		 * @param oldMp4
+		 * @param newMp4   通过压缩或mediapool后的新文件,里面只有视频部分或h264裸码流
+		 * @param dstMp4
+		 */
+	public static void encoderAddAudio(String oldMp4,String newMp4,String dstMp4)
+	{
+		//
+		MediaInfo  info=new MediaInfo(oldMp4);
+		info.prepare();
+		
+		Log.i(TAG,"encoderAddAudio=====>");
+		
+		String audioPath=null;
+		if(info.aCodecName.equalsIgnoreCase("aac")){
+			audioPath=createFile("/sdcard/", ".aac");
+		}else if(info.aCodecName.equalsIgnoreCase("mp4"))
+			audioPath=createFile("/sdcard/", ".mp3");
+		
+		if(audioPath!=null){
+			VideoEditor veditor=new VideoEditor();
+			veditor.executeDeleteVideo(oldMp4, audioPath);
+			veditor.executeVideoBindAudio(newMp4, audioPath, dstMp4);
+			deleteFile(audioPath);
+		}
+	}
+	private static String createFile(String dir,String suffix){
+    	Calendar c = Calendar.getInstance();
+		int  hour = c.get(Calendar.HOUR_OF_DAY);
+	    int minute = c.get(Calendar.MINUTE);
+		int year=c.get(Calendar.YEAR);
+		int month=c.get(Calendar.MONTH)+1;
+		int day=c.get(Calendar.DAY_OF_MONTH);
+		int second=c.get(Calendar.SECOND);
+		int millisecond=c.get(Calendar.MILLISECOND);
+		year=year-2000;
+		String name=dir;
+		name+=String.valueOf(year);
+		name+=String.valueOf(month);
+		name+=String.valueOf(day);
+		name+=String.valueOf(hour);
+		name+=String.valueOf(minute);
+		name+=String.valueOf(second);
+		name+=String.valueOf(millisecond);
+		name+=suffix;
+		
+		try {
+			Thread.sleep(1);  //保持文件名的唯一性.
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		File file=new File(name);
+		if(file.exists()==false)
+		{
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return name;
+    }
+	/**
+	 * 删除指定的文件.
+	 * @param path
+	 */
+    private static void deleteFile(String path)
+    {
+    	File file=new File(path);
+		if(file.exists())
+		{
+			file.delete();
+		}
+    }
+	 private static boolean fileExist(String absolutePath)
+	 {
+		 if(absolutePath==null)
+			 return false;
+		 else 
+			 return (new File(absolutePath)).exists();
+	 }
+	 
+	 private static boolean filesExist(String[] fileArray)
+	 {
+		 
+		 for(String file: fileArray)
+		 {
+			 if(fileExist(file)==false)
+				 return false;
+		 }
+		 return true;
+	 }
 	   /**
 		  * 删除多媒体文件中的音频,把多媒体中的视频部分提取出来，这样提出的视频播放，就没有声音了，
 		  * 适用在当想给一个多媒体文件更换声音的场合的。您可以用这个方法删除声音后，通过{@link executeVideoEditor} 重新为视频增加一个声音。
@@ -291,7 +406,7 @@ public class VideoEditor {
 		  */
 		  public int executeDeleteAudio(String srcFile,String dstFile)
 		  {
-			  	if(FileUtils.fileExist(srcFile)){
+			  	if(fileExist(srcFile)){
 				  	List<String> cmdList=new ArrayList<String>();
 			    	cmdList.add("-i");
 					cmdList.add(srcFile);
@@ -318,7 +433,7 @@ public class VideoEditor {
 		   */
 		  public int executeDeleteVideo(String srcFile,String dstFile)
 		  {
-			  	if(FileUtils.fileExist(srcFile)==false)
+			  	if(fileExist(srcFile)==false)
 			  		return VIDEO_EDITOR_EXECUTE_FAILED;
 			  	
 			    if(srcFile.endsWith(".mp4")==false){
@@ -357,7 +472,7 @@ public class VideoEditor {
 				  return VIDEO_EDITOR_EXECUTE_FAILED;
 			  }
 			  
-			  if(FileUtils.fileExist(videoFile) && FileUtils.fileExist(audioFile)){
+			  if(fileExist(videoFile) && fileExist(audioFile)){
 				  
 					  if(audioFile.endsWith(".aac")){
 						  isAAC=true;
@@ -402,7 +517,7 @@ public class VideoEditor {
 			  if(dstFile.endsWith(".mp4")==false){
 				  return VIDEO_EDITOR_EXECUTE_FAILED;
 			  }
-			  if(FileUtils.fileExist(videoFile) && FileUtils.fileExist(audioFile)){
+			  if(fileExist(videoFile) && fileExist(audioFile)){
 				  
 				  if(audioFile.endsWith(".aac")){
 					  isAAC=true;
@@ -454,7 +569,7 @@ public class VideoEditor {
 			  }
 			  
 			  
-			  if(FileUtils.fileExist(videoFile) && FileUtils.fileExist(audioFile)){
+			  if(fileExist(videoFile) && fileExist(audioFile)){
 				
 				  if(audioFile.endsWith(".aac")){
 					  isAAC=true;
@@ -503,7 +618,7 @@ public class VideoEditor {
 		   */
 		  public int executeAudioCutOut(String srcFile,String dstFile,float startS,float durationS)
 		  {
-			  if(FileUtils.fileExist(srcFile)){
+			  if(fileExist(srcFile)){
 				
 					List<String> cmdList=new ArrayList<String>();
 					
@@ -546,7 +661,7 @@ public class VideoEditor {
 				  return VIDEO_EDITOR_EXECUTE_FAILED;
 			  }
 			  
-			  if(FileUtils.fileExist(videoFile)){
+			  if(fileExist(videoFile)){
 				
 					List<String> cmdList=new ArrayList<String>();
 					
@@ -593,7 +708,7 @@ public class VideoEditor {
 			  }
 			  
 			  String dstPath=dstDir+jpgPrefix+"_%3d.jpeg";
-			  if(FileUtils.fileExist(videoFile)){
+			  if(fileExist(videoFile)){
 				
 					List<String> cmdList=new ArrayList<String>();
 					
@@ -638,7 +753,7 @@ public class VideoEditor {
 			  }
 			  
 			  String dstPath=dstDir+jpgPrefix+"_%3d.jpeg";
-			  if(FileUtils.fileExist(videoFile)){
+			  if(fileExist(videoFile)){
 				
 					List<String> cmdList=new ArrayList<String>();
 					
@@ -695,7 +810,7 @@ public class VideoEditor {
 			  if(mp4Path.endsWith(".mp4")==false){
 				  return VIDEO_EDITOR_EXECUTE_FAILED;
 			  }
-			  if(FileUtils.fileExist(mp4Path)){
+			  if(fileExist(mp4Path)){
 				
 					List<String> cmdList=new ArrayList<String>();
 					
@@ -733,7 +848,7 @@ public class VideoEditor {
 		   */
 		  public int executeConvertTsToMp4(String[] tsArray,String dstFile)
 		  {
-			  if(FileUtils.filesExist(tsArray)){
+			  if(filesExist(tsArray)){
 				
 				    String concat="concat:";
 				    for(int i=0;i<tsArray.length-1;i++){
@@ -792,7 +907,7 @@ public class VideoEditor {
 		   */
 		  public int executeVideoFrameCrop(String videoFile,int cropWidth,int cropHeight,int x,int y,String dstFile,String codecname,int bitrate)
 		  {
-			  if(FileUtils.fileExist(videoFile)){
+			  if( fileExist(videoFile)){
 					
 					List<String> cmdList=new ArrayList<String>();
 					String cropcmd=String.format(Locale.getDefault(),"crop=%d:%d:%d:%d",cropWidth,cropHeight,x,y);
@@ -851,7 +966,7 @@ public class VideoEditor {
 		   * @return
 		   */
 		  public int executeVideoFrameScale(String videoFile,int scaleWidth,int scaleHeight,String dstFile,int bitrate){
-			  if(FileUtils.fileExist(videoFile)){
+			  if(fileExist(videoFile)){
 					
 					List<String> cmdList=new ArrayList<String>();
 					String scalecmd=String.format(Locale.getDefault(),"scale=%d:%d",scaleWidth,scaleHeight);
@@ -954,7 +1069,7 @@ public class VideoEditor {
 		  public int executeAddWaterMark(String videoFile,String imagePngPath,int x,int y,String dstFile,int bitrate){
 			  //./ffmpeg -i miaopai.mp4 -i watermark.png -filter_complex "overlay=0:0" -acodec copy out2.mp4  
 			  
-			  if(FileUtils.fileExist(videoFile)){
+			  if(fileExist(videoFile)){
 					List<String> cmdList=new ArrayList<String>();
 					String overlayXY=String.format(Locale.getDefault(),"overlay=%d:%d",x,y);
 					
@@ -1013,7 +1128,7 @@ public class VideoEditor {
 		  public int executeAddWaterMark(String videoFile,String imagePngPath,float startTimeS,float endTimeS,int x,int y,String dstFile,int bitrate)
 		  {
 			// ./ffmpeg -i miaopai.mp4 -i test.png -filter_complex "[0:v][1:v] overlay=25:25:enable='between(t,0,5)'" -pix_fmt yuv420p -c:a copy output33.mp4
-			  if(FileUtils.fileExist(videoFile)){
+			  if(fileExist(videoFile)){
 					List<String> cmdList=new ArrayList<String>();
 					String overlayXY=String.format(Locale.getDefault(),"overlay=%d:%d:enable='between(t,%f,%f)",x,y,startTimeS,endTimeS);
 					
@@ -1052,59 +1167,66 @@ public class VideoEditor {
 				  return VIDEO_EDITOR_EXECUTE_FAILED;
 			  }
 		  }
-		  /**
-		   * 为视频叠加两张图片，并同时指定开始结束时间，坐标等。
-		   * @param cfg　　
-		   * @return
-		   */
-		  public int executeAddWaterMark(WaterMarkConfig cfg)
+		
+			/**
+			 * 给视频旋转角度,注意这里 只是 旋转画面的的角度,而不会调整视频的宽高.
+			 * @param srcPath　需要旋转角度的原视频
+			 * @param decoder　　视频的解码器名字
+			 * @param angle　　角度
+			 * @param dstPath　　处理后的视频存放的路径,后缀需要是.mp4
+			 * @return
+			 */
+		  public int executeRotateAngle(String srcPath,String decoder,float angle,String dstPath,int bitrate)
 		  {
-			//./ffmpeg -i miaopai.mp4 -i test.png -i testfade.png -filter_complex "overlay=25:25,overlay=x=if(gt(t\,10)\,0\,NAN ) :y=0" -pix_fmt yuv420p -c:a copy outt3.mp4
-			  if(cfg!=null && FileUtils.fileExist(cfg.srcPath)){
+			  ////ffmpeg -i miaopai.mp4 -vf "rotate=45*(PI/180),format=yuv420p" -metadata:s:v rotate=0 -codec:v libx264 -codec:a copy output.mp4
+			  if(fileExist(srcPath)){
+					
+				  String filter=String.format(Locale.getDefault(),"rotate=%f*(PI/180),format=yuv420p",angle);
+				  
 					List<String> cmdList=new ArrayList<String>();
-					String overlayXY=String.format(Locale.getDefault(),"overlay=%d:%d,overlay=%d:%d:enable='between(t,%f,%f)",
-							cfg.logo1X,
-							cfg.logo1Y,
-							cfg.logo2X,
-							cfg.logo2Y,
-							cfg.logo2StartTimeS,
-							cfg.logo2EndTimeS);
 					
 					cmdList.add("-vcodec");
-					cmdList.add("lansoh264_dec");
+					cmdList.add(decoder);
+					
 					
 					cmdList.add("-i");
-					cmdList.add(cfg.srcPath);
-
-					cmdList.add("-i");
-					cmdList.add(cfg.logo1);
-					cmdList.add("-i");
-					cmdList.add(cfg.logo2);
-
-					cmdList.add("-filter_complex");
-					cmdList.add(overlayXY);
+					cmdList.add(srcPath);
 					
+					cmdList.add("-vf");
+					cmdList.add(filter);
+					
+					
+					cmdList.add("-metadata:s:v");
+					cmdList.add("rotate=0");
 					cmdList.add("-acodec");
 					cmdList.add("copy");
-					
+					cmdList.add("-y");
 					cmdList.add("-vcodec");
-					cmdList.add("lansoh264_enc"); 
+					cmdList.add("lansoh264_enc");
 					
 					cmdList.add("-b:v");
-					cmdList.add(String.valueOf(cfg.bitRate)); 
+					cmdList.add(String.valueOf(bitrate)); 
 					
-					cmdList.add("-pix_fmt");   //<========请注意, 使用lansoh264_enc编码器编码的时候,请务必指定格式,因为底层设计只支持yuv420p的输出.
+					cmdList.add("-pix_fmt");
 					cmdList.add("yuv420p");
 					
-					cmdList.add("-y");
-					cmdList.add(cfg.dstPath);
+					cmdList.add(dstPath);
+					 
 					String[] command=new String[cmdList.size()];  
 				     for(int i=0;i<cmdList.size();i++){  
 				    	 command[i]=(String)cmdList.get(i);  
 				     }  
 				    return  executeVideoEditor(command);
+				  
 			  }else{
 				  return VIDEO_EDITOR_EXECUTE_FAILED;
 			  }
-		  } 
-}	
+		  }
+		  
+//		  public 压缩. 调整视频横竖屏.
+		  
+		  /**
+		   * 
+		   */
+		  
+}

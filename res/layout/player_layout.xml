@@ -1,26 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".VideoPlayerActivity" >
 
      
       
     <FrameLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-        
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
         <com.lansosdk.videoeditor.utils.TextureRenderView
         android:id="@+id/surface1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-        
     </FrameLayout>
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="提示:\n当前是等比例的显示到屏幕上, 目的是保持视频的宽高比一致,视频不变形;\n\n 或许会导致分辨率小的画面被放大了,画面质量下降,这是正常情况,只是播放的界面事情,不影响视频本身"
-        android:layout_margin="10dip"/>
+    
+    
+      <FrameLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
+        <com.lansosdk.videoeditor.utils.TextureRenderView
+        android:id="@+id/surface2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </FrameLayout>
 
-</RelativeLayout>
+</LinearLayout>
